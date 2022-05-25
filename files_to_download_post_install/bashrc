@@ -1,0 +1,91 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+PS1='\u \W>[ \d \A]\$ '
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$HOME/.local/bin:$PATH" # gets jupyter notebooks running, so I'm happy. Should probably get other programs running too.
+
+## History
+# Ignore duplicate commands:
+HISTCONTROL=ignoredups
+# Set NO. lines saved in Bash History:
+HISTSIZE=2000
+HISTFILESIZE=2000
+
+# trying to remap caps key to escape
+set xkbmap -option caps:escape 
+
+## VIM MODE
+set -o vi
+
+# 
+## ALIASES:
+alias ls='ls --color=auto'
+# use long listing format:
+alias ll='ls -lash'
+
+#quick ways to get out of current directory:
+alias ..='cd ..;pwd'
+alias ...='cd ../..;pwd' 
+alias ....='cd ../../..;pwd' 
+
+#clear terminal screen:
+alias c='clear'
+
+#display disk space in readable format:
+alias df='df -h'
+# memory info:
+alias meminfo='free -m -l -t -h'
+# force rm command to inquire as a safeguard and print if it's done :
+alias rmr='rm -i -v'
+
+# delete all subdirectories in and including a directory:
+alias rmall='rm -r -f'
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# alias for neovim
+alias v='nvim'
+
+# alias to exit the terminal
+alias q='exit'
+
+#alias to activate virtual environment:
+alias venvact='source venv/bin/activate'
+
+# alias for zathura:
+alias z='zathura'
+
+# alias for newsboat:
+alias n='newsboat'
+
+#alias for sc-im:
+alias sc='sc-im'
+
+# For ncursesw headers to be found in SC-IM (just is case)
+if [[ `whereis ncursesw` == "ncursesw: /usr/include/ncursesw" ]]; then
+    mkdir /usr/include/ncursesw
+    cd /usr/include/ncursesw
+    ln -s ../{cursesapp.h,cursesf.h,curses.h,cursesm.h,cursesp.h,cursesw.h,cursslk.h,eti.h,etip.h,form.h,menu.h,nc_tparm.h,ncurses_dll.h,ncurses.h,panel.h,termcap.h,term_entry.h,term.h,tic.h,unctrl.h} ./
+fi
+
+# Function that creates a directory and cd's into it
+
+mcd () {
+    mkdir -p "$1"
+    cd "$1"
+}
+
+# Function that changes directory and displays files
+
+cdl () {
+    cd "$1"
+    ls
+}
